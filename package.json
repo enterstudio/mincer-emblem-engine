@@ -1,0 +1,33 @@
+{
+    "name": "mincer-emblem-engine",
+    "version": "0.1.0",
+    "description": "A mincer engine that compiles Emblemjs templates for Emberjs applications",
+    "main": "lib/mincer_emblem_engine.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Nthalk/mincer-emblem-engine.git"
+    },
+    "keywords": [
+        "emberjs",
+        "ember",
+        "emblemjs",
+        "emblemjs",
+        "mincer",
+        "mincer-engine",
+        "precompile"
+    ],
+    "author": "Carl Taylor <carl@etaylor.me>",
+    "license": "BSD-2-Clause",
+    "bugs": {
+        "url": "https://github.com/Nthalk/mincer-emblem-engine/issues"
+    },
+    "dependencies": {
+        "mincer": "*"
+    },
+    "devDependencies": {
+        "coffee-script": "*"
+    },
+    "scripts": {
+        "prepublish": "coffee -o lib/ -c src/mincer_emblem_engine.coffee"
+    }
+}
