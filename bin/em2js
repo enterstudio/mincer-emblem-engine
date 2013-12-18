@@ -1,0 +1,31 @@
+#!/usr/bin/env coffee
+
+path = require 'path'
+fs = require 'fs'
+sys = require 'sys'
+mincer = require 'mincer'
+
+lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib')
+emblem_engine = require(lib + '/mincer_emblem_engine')
+
+env = new mincer.Environment()
+env.registerEngine(".emblem", emblem_engine)
+
+
+program = require 'commander'
+
+program
+.version('0.0.1')
+.usage('[options] <file ...>')
+.option('-d, --directory', 'Specify the emblem templates directories (comma deliniated)')
+.parse(process.argv)
+
+directory = "."
+directory = program.directory if program.directory
+for dir in directory.split(',')
+  env.appendPath dir
+
+for file in program.args
+  sys.puts env.findAsset file
+
+

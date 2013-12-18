@@ -22,12 +22,16 @@
         "url": "https://github.com/Nthalk/mincer-emblem-engine/issues"
     },
     "dependencies": {
-        "mincer": "*"
+        "mincer": "*",
+        "commander": "*"
     },
     "devDependencies": {
         "coffee-script": "*"
     },
     "scripts": {
         "prepublish": "coffee -o lib/ -c src/mincer_emblem_engine.coffee"
+    },
+    "bin": {
+        "em2js": "./bin/em2js"
     }
 }
