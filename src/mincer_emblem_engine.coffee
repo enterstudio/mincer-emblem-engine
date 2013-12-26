@@ -18,7 +18,6 @@ include "#{__dirname}/../vendor/handlebars.js"
 include "#{__dirname}/../vendor/ember.js"
 include "#{__dirname}/../vendor/emblem.js"
 
-
 ################################################################################
 # EmblemEngine
 
@@ -42,12 +41,10 @@ EmblemEngine.prototype.evaluate = (ctx, locals)->
   template = context.Emblem.precompile(context.Ember.Handlebars, @data).toString()
   root = false
 
-  template_path = options.template_path || ""
-
   ctx.environment.paths.forEach (path)=>
-    path = path + template_path
-    root = fs.realpathSync path if @file.indexOf(path) is 0
+    path = path + options.template_path
+    root = fs.realpathSync(path) if @file.indexOf(path) is 0
 
-  template_path = @file.substring root.length
+  template_path = @file.substring(root.length + 1)
   template_path = template_path.split('.')[0]
   "Ember.TEMPLATES['#{template_path}'] = Ember.Handlebars.template(#{template});\n"
