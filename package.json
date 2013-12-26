@@ -1,6 +1,6 @@
 {
     "name": "mincer-emblem-engine",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "A mincer engine that compiles Emblemjs templates for Emberjs applications",
     "main": "lib/mincer_emblem_engine.js",
     "repository": {
@@ -26,7 +26,8 @@
         "commander": "*"
     },
     "devDependencies": {
-        "coffee-script": "*"
+        "coffee-script": "*",
+        "mincer": "*"
     },
     "scripts": {
         "prepublish": "coffee -o lib/ -c src/mincer_emblem_engine.coffee"

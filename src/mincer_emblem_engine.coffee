@@ -4,19 +4,20 @@ sys = require 'sys'
 path = require 'path'
 mincer = require 'mincer'
 
-sandbox = {}
+sandbox = {self: {}}
 context = vm.createContext sandbox
 
 ################################################################################
 # Required libs
 include = (file_name)->
   code = fs.readFileSync path.resolve file_name
-  vm.runInContext code,context, file_name
+  vm.runInContext code, context, file_name
 
 include "#{__dirname}/../vendor/jquery_shim.js"
 include "#{__dirname}/../vendor/handlebars.js"
 include "#{__dirname}/../vendor/ember.js"
 include "#{__dirname}/../vendor/emblem.js"
+
 
 ################################################################################
 # EmblemEngine
@@ -31,6 +32,11 @@ EmblemEngine.options = (opts = {})->
   options = opts
 
 EmblemEngine.defaultMimeType = 'application/javascript'
+
+EmblemEngine.register = (environment, options = {})->
+  EmblemEngine.options options
+  environment.registerEngine ".emblem", EmblemEngine
+
 
 EmblemEngine.prototype.evaluate = (ctx, locals)->
   template = context.Emblem.precompile(context.Ember.Handlebars, @data).toString()

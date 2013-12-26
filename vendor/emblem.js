@@ -547,6 +547,8 @@ Emblem.Parser = (function() {
               classes = shorthandAttributes[1];
 
           var tagOpenContent = [];
+          AST = Ember.Handlebars.AST
+
           tagOpenContent.push(new AST.ContentNode('<' + tagName));
 
           if(id) {

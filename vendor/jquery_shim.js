@@ -6,6 +6,12 @@ Element.firstChild = function () {
 Element.innerHTML = function () {
     return Element;
 };
+Element.setAttribute = function () {
+    return Element;
+};
+Element.appendChild = function () {
+    return Element;
+};
 Element.childNodes = [0, 1]
 var document = { createRange: false, createElement: function () {
     return Element;
