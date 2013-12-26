@@ -33,8 +33,8 @@ EmblemEngine.options = (opts = {})->
 
 EmblemEngine.defaultMimeType = 'application/javascript'
 
-EmblemEngine.register = (environment, options = {})->
-  EmblemEngine.options options
+EmblemEngine.register = (environment, options = false)->
+  EmblemEngine.options options if options
   environment.registerEngine ".emblem", EmblemEngine
 
 
@@ -42,9 +42,11 @@ EmblemEngine.prototype.evaluate = (ctx, locals)->
   template = context.Emblem.precompile(context.Ember.Handlebars, @data).toString()
   root = false
 
+  template_path = options.template_path || ""
+
   ctx.environment.paths.forEach (path)=>
-    path = path + options.template_path
-    root = path if @file.indexOf(path) is 0
+    path = path + template_path
+    root = fs.realpathSync path if @file.indexOf(path) is 0
 
   template_path = @file.substring root.length
   template_path = template_path.split('.')[0]

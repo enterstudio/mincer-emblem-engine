@@ -1,6 +1,6 @@
 {
     "name": "mincer-emblem-engine",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A mincer engine that compiles Emblemjs templates for Emberjs applications",
     "main": "lib/mincer_emblem_engine.js",
     "repository": {
