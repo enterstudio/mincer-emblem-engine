@@ -4,6 +4,7 @@ sys = require 'sys'
 path = require 'path'
 mincer = require 'mincer'
 
+included = false
 sandbox = {self: {}}
 context = vm.createContext sandbox
 
@@ -13,22 +14,22 @@ include = (file_name)->
   code = fs.readFileSync path.resolve file_name
   vm.runInContext code, context, file_name
 
-include "#{__dirname}/../vendor/jquery_shim.js"
-include "#{__dirname}/../vendor/handlebars.js"
-include "#{__dirname}/../vendor/ember.js"
-include "#{__dirname}/../vendor/emblem.js"
-
 ################################################################################
 # EmblemEngine
 
 options =
   template_path: '/templates/'
+  jquery: "#{__dirname}/../vendor/jquery_shim.js"
+  handlebars: "#{__dirname}/../vendor/handlebars.js"
+  ember: "#{__dirname}/../vendor/ember.js"
+  emblem: "#{__dirname}/../vendor/emblem.js"
 
 EmblemEngine = module.exports = ->
   mincer.Template.apply @, arguments
 
-EmblemEngine.options = (opts = {})->
-  options = opts
+EmblemEngine.options = (opts = {}) ->
+  for own key, value of opts
+    options[key] = value
 
 EmblemEngine.defaultMimeType = 'application/javascript'
 
@@ -36,8 +37,14 @@ EmblemEngine.register = (environment, options = false)->
   EmblemEngine.options options if options
   environment.registerEngine ".emblem", EmblemEngine
 
-
 EmblemEngine.prototype.evaluate = (ctx, locals)->
+  unless included
+    included = true
+    include options.jquery
+    include options.handlebars
+    include options.ember
+    include options.emblem
+
   template = context.Emblem.precompile(context.Ember.Handlebars, @data).toString()
   root = false
 
